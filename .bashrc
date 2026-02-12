@@ -2,8 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=$PATH:/home/anhol/.local/bin
-
+export PATH=$PATH:/home/anhol/.local/bin:/home/anhol/.local/share/gem/ruby/3.3.0/bin:/opt/activitywatch
+export MANPAGER="nvim +Man!"
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -95,6 +95,7 @@ alias la='ls -lah'
 alias l='ls -CF'
 
 alias ff='fastfetch'
+alias quit='exit'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

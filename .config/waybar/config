@@ -12,7 +12,7 @@
         "sway/window"
     ],
     "modules-center": [
-
+        "mpris"
     ],
     "modules-right": [
         "network",
@@ -130,6 +130,18 @@
     "tray": {
         "icon-size": 21,
         "spacing": 10
+    },
+    "mpris": {
+    	"format": "{player_icon} {title} ({player})",
+    	"format-paused": "{status_icon} {title} ({player})",
+    	"player-icons": {
+    		"default": "▶",
+    		"mpv": "🎵"
+    	},
+    	"status-icons": {
+    		"paused": "⏸"
+    	},
+    	// "ignored-players": ["firefox"]
     }
 
 }

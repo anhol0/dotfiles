@@ -23,8 +23,6 @@ Plug 'gruvbox-community/gruvbox'
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-Plug 'wakatime/vim-wakatime'
-
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'

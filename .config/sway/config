@@ -20,7 +20,7 @@ set $menu fuzzel
 
 set $browser firefox-esr
 
-set $telegram materialgram
+set $telegram /home/anhol/Telegram/Telegram
 
 include /etc/sway/config-vars.d/*
 
@@ -62,11 +62,12 @@ exec swayidle -w \
 exec waybar&
 exec swaykbdd&
 exec wl-paste --watch cliphist store &
+exec swaync
 ### Input configuration
 #
 # Example configuration:
 #
-input "1102:4618:DELL081B:00_044E:120A_Touchpad" {
+input * {
     dwt enabled
     tap enabled
     natural_scroll enabled
