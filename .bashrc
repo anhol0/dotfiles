@@ -2,8 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=$PATH:/home/anhol/.local/bin:/home/anhol/.local/share/gem/ruby/3.3.0/bin:/opt/activitywatch
+export PATH=$PATH:/home/anhol/.local/bin:/home/anhol/.local/share/gem/ruby/3.3.0/bin:/opt/activitywatch:/opt/minecraft-launcher/
 export MANPAGER="nvim +Man!"
+export HEADPHONES="F8:AB:E5:E5:11:E9"
+export HEADPHONES2="BC:87:FA:C3:84:66"
+export EDITOR="/usr/bin/nvim"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -45,7 +49,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then

@@ -66,8 +66,15 @@
 #pulseaudio,
 #temperature,
 #tray,
-#window{
+#window
+{
     padding-left: 10px;
+    padding-right: 10px;
+}
+
+#power-profiles-daemon,
+#custom-bluetooth
+{
     padding-right: 10px;
 }
 
@@ -76,7 +83,7 @@
  * Module styles
  * -------------------------------------------------------------------------- */
 
-#battery {
+#battery, #power-profiles-daemon, #custom-bluetooth {
     background: #689d6a;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
