@@ -16,8 +16,8 @@
     ],
     "modules-right": [
         "network",
-        "memory",
-        "cpu",
+        // "memory",
+        // "cpu",
         "sway/language",
         "battery",
         "power-profiles-daemon",

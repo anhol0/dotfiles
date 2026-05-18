@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=$PATH:/home/anhol/.local/bin:/home/anhol/.local/share/gem/ruby/3.3.0/bin:/opt/activitywatch:/opt/minecraft-launcher/
+export PATH=$PATH:/home/anhol/.local/bin:/home/anhol/.local/share/gem/ruby/3.3.0/bin:/opt/Telegram
 export MANPAGER="nvim +Man!"
 export HEADPHONES="F8:AB:E5:E5:11:E9"
 export HEADPHONES2="BC:87:FA:C3:84:66"

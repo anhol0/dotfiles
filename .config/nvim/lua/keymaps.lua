@@ -26,7 +26,9 @@ map("n", "<C-L>", ':tabnext<CR>', opts)
 map("n", "<C-H>", ':tabprevious<CR>', opts)
 map("n", "<C-PageDown>", '<C-\\><C-n>:tabnext<CR>', opts)
 map("n", "<C-PageUp>", '<C-\\><C-n>:tabprevious<CR>', opts)
-
+-- Shifting left/right stays in visual mode
+map("v", "<", "<gv", { desc = "Shift left and keep selection" })
+map("v", ">", ">gv", { desc = "Shift right and keep selection" })
 
 -- Move tab to specific position with m<number>
 for i = 1, 9 do

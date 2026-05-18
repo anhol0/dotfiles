@@ -20,13 +20,13 @@ set $menu fuzzel
 
 set $browser firefox-esr
 
-set $telegram /home/anhol/Telegram/Telegram
+set $telegram /opt/Telegram/Telegram
 
 include /etc/sway/config-vars.d/*
 
 # Configuring wob to show bar for volume
-set $WOBSOCK_V $XDG_RUNTIME_DIR/wob_b.sock
-set $WOBSOCK_B $XDG_RUNTIME_DIR/wob_v.sock
+set $WOBSOCK_B $XDG_RUNTIME_DIR/wob_b.sock
+set $WOBSOCK_V $XDG_RUNTIME_DIR/wob_v.sock
 
 ### Output configuration
 #
@@ -43,8 +43,8 @@ output * {
     background /home/anhol/wp/currentwp fill
 }
 
-output DP-1 {
-    pos 0 0 res 1920x1080
+output eDP-1 {
+    pos 0 0 res 1600x900
 }
 
 # output eDP-1 {
@@ -66,6 +66,7 @@ output DP-1 {
 exec waybar&
 exec swaykbdd&
 exec lxqt-policykit-agent&
+exec keepassxc&
 exec wl-paste --watch cliphist store &
 exec rm -f $WOBSOCK_V && mkfifo $WOBSOCK_V && tail -f $WOBSOCK_V | wob -v ~/.config/wob/volume &
 exec rm -f $WOBSOCK_B && mkfifo $WOBSOCK_B && tail -f $WOBSOCK_B | wob -c ~/.config/wob/brightness &
@@ -75,17 +76,17 @@ exec_always xrandr --output XWAYLAND0 --primary
 #
 # Example configuration:
 #
-input 2:7:SynPS/2_Synaptics_TouchPad {
+input 1739:0:Synaptics_TM3053-010 {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
 }
 
-input 2:10:TPPS/2_Elan_TrackPoint {
+input 2:10:TPPS/2_IBM_TrackPoint {
     dwtp enabled
     natural_scroll enabled
-    pointer_accel -0.6
+    pointer_accel -0.2
     scroll_method on_button_down
 }
 
@@ -96,13 +97,6 @@ input 6058:20564:ThinkPad_Extra_Buttons {
 input type:keyboard {
     xkb_layout "us,ru"
     xkb_options "grp:win_space_toggle,compose:ralt" 
-}
-
-layer_effects * {
-    blur enable;
-    blur_xray enable;
-    blur_ignore_transparent enable;
-    shadows enable;
 }
 
 #
@@ -256,11 +250,27 @@ bindsym $mod+Shift+r mode "resize"
 #
 # Utilities:
 #
-    # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5% && pamixer --get-volume > $WOBSOCK_V
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5% && pamixer --get-volume > $WOBSOCK_V
-    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle && ( [ "$(pamixer --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK 
+     # PipeWire / WirePlumber volume controls
+
+    bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && \
+        ( wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && \
+          echo 0 > $WOBSOCK_V ) || \
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+        awk '{print int($2 * 100)}' > $WOBSOCK_V        
+
+
+    bindsym --locked XF86AudioLowerVolume exec \
+        wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%- && \
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+        awk '{print int($2 * 100)}' > $WOBSOCK_V
+
+    bindsym --locked XF86AudioRaiseVolume exec \
+        wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && \
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+        awk '{print int($2 * 100)}' > $WOBSOCK_V
+
+    bindsym --locked XF86AudioMicMute exec \
+        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle 
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && light -G | awk '{print int($1 + 0.999)}' > $WOBSOCK_B
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ && light -G | awk '{print int($1 + 0.999)}' > $WOBSOCK_B
@@ -304,6 +314,7 @@ bindsym $mod+Shift+r mode "resize"
 # }
 
 for_window [app_id="lxqt-policykit-agent"] floating enable
+for_window [app_id="org.keepassxc.KeePassXC" title="Access Request"] floating enable
 
 include /etc/sway/config.d/*
 include /home/anhol/.config/sway/config.d/*
